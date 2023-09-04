@@ -1,5 +1,11 @@
 const UserModel = require('../models/userModel');
 
+
+exports.loginView = async(req,res)=>{
+  res.render('login');
+}
+
+
 //login user
 exports.login = async(req, res) => {
     const { username, password } = req.body;
