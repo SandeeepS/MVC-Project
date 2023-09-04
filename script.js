@@ -10,6 +10,9 @@ app.set('view engine','ejs');
 app.use(express.static("views"));
 app.use(express.static(__dirname));
 
+app.use(express.json()); // for parsing application/json
+app.use(express.urlencoded({ extended: true }));
+
 
 
 //url pass connection
