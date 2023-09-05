@@ -1,5 +1,8 @@
 const UserModel = require('../models/userModel');
 
+exports.getRegister = async (req,res)=>{
+  res.render("register");
+};
 
 
 exports.loginView = async(req,res)=>{
@@ -9,7 +12,8 @@ exports.loginView = async(req,res)=>{
 exports.indexView = async(req,res)=>{
   if(!req.session.user){
     res.redirect('/');
-  }else{
+  }else{  
+    
   res.render('index');
   }
   //res.render('index');
@@ -47,6 +51,7 @@ exports.login = async(req, res) => {
   exports.logoutIndex = (req,res)=>{
     req.session.destroy((err)=>{
       
+      
       if(err){
         console.error('Error destroyng session',err);
       }else{
@@ -58,3 +63,30 @@ exports.login = async(req, res) => {
    
   };
   
+
+
+  
+//signup
+exports.signup = async (req, res) => {
+  try {
+    const data = new UserModel({
+      "name": req.body.name,
+      "email": req.body.email,
+      "password": req.body.password
+    });
+    const {name}=data;
+    req.session.user=name;
+    const savedData = await data.save();
+
+    if (savedData) {
+      console.log("Record inserted successfully");
+      res.redirect("/index");
+    } else {
+      console.log("Failed to insert record");
+      res.redirect("/register");
+    }
+  } catch (error) {
+    console.error("Error during signup:", error);
+    res.redirect("/register");
+  }
+};
