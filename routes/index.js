@@ -22,7 +22,18 @@ route.post('/signup',userController.signup);
 route.get('/admin',adminController.admin);
 route.get('/adminlogin',adminController.adminlogin);
 route.post('/adlogin',adminController.adlogin);
-// route.get('/logoutAd',adminController);
+route.get('/logoutAd',adminController.logoutAdmin);
+
+
+//admin operations
+
+route.get('/updateUserData/:id',adminController.updateUserData);
+route.post('/updateUser/:id',adminController.updatedUser)
+route.get('/createUser',adminController.createUser);
+route.post('/newUserByAdmin',adminController.userByAdmin);
+route.get('/deleteUserData/:id',adminController.deleteUserData)
+
+
 
 module.exports = route
 
