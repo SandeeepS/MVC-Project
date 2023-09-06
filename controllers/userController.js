@@ -1,14 +1,17 @@
 const UserModel = require('../models/userModel');
 
+//rendering register page 
 exports.getRegister = async (req,res)=>{
   res.render("register");
 };
 
-
+//render the login page 
 exports.loginView = async(req,res)=>{
   res.render('login');
 }
 
+
+//rendering the index(Home page)
 exports.indexView = async(req,res)=>{
   if(!req.session.user){
     res.redirect('/');
@@ -16,12 +19,13 @@ exports.indexView = async(req,res)=>{
     
   res.render('index');
   }
-  //res.render('index');
+  
 }
 
 
 //login user
 exports.login = async(req, res) => {
+   
     const { username, password } = req.body;
     console.log(username);
     console.log(password);
@@ -45,9 +49,8 @@ exports.login = async(req, res) => {
     }
   };
 
+  
   //logout user
-
-
   exports.logoutIndex = (req,res)=>{
     req.session.destroy((err)=>{
       
@@ -64,8 +67,6 @@ exports.login = async(req, res) => {
   };
   
 
-
-  
 //signup
 exports.signup = async (req, res) => {
   try {

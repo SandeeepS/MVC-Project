@@ -1,13 +1,7 @@
 const UserModel = require('../models/userModel');
 const AdminModel =require('../models/adminModel');
 
-
-
-
-
-
 //admin login
-
 exports.adminlogin= async (req,res)=>{
   if(!req.session.user2){
     res.render('adminlogin');
@@ -46,29 +40,32 @@ exports.adlogin =  async (req, res) => {
 };
 
 
-  //admin with searcing user
-  exports.admin = async (req, res) => {
-    try {
-      if (!req.session.user2) {
-        res.redirect('/adminlogin');
-      } else {
-        const searchQuery = req.query.search || ''; // Get the search query from the query parameter
-  
-        const users = await UserModel.find({ name: { $regex: searchQuery, $options: 'i' } }).exec();
-        const admins = await AdminModel.find().exec();
-  
-        res.render('admin', { users, admins, searchQuery });
-      }
-    } catch (error) {
-      console.error("Error fetching user and admin details:", error);
+//admin with searcing user
+exports.admin = async (req, res) => {
+  try {
+    if (!req.session.user2) {
       res.redirect('/adminlogin');
+    } else {
+      const searchQuery = req.query.search || ''; // Get the search query from the query parameter
+
+      const users = await UserModel.find({ name: { $regex: searchQuery, $options: 'i' } }).exec();
+      const admins = await AdminModel.find().exec();
+
+      res.render('admin', { users, admins, searchQuery });
     }
-  };
-  
+  } catch (error) {
+    console.error("Error fetching user and admin details:", error);
+    res.redirect('/adminlogin');
+  }
+};
+
 
 //creating user from admin
 exports.createUser =  async(req, res) => {
-  res.render('createUser'); 
+  if(req.session.user2){
+    res.render('createUser'); 
+  }
+  
 };
 
 //route for creating user from 
@@ -90,11 +87,7 @@ exports.userByAdmin= async (req, res) => {
 };
 
 
-
-
 //updating userdata
-
-
 exports.updateUserData= async (req, res) => {
   try {
     const dataId = req.params.id;
@@ -109,6 +102,7 @@ exports.updateUserData= async (req, res) => {
     res.redirect('/admin');
   }
 };
+
 
 // Route to handle the submission of updated data
 exports.updatedUser =  async (req, res) => {
@@ -126,12 +120,8 @@ exports.updatedUser =  async (req, res) => {
   }
 };
 
+
 //delete user
-
-
-
-
-
 exports.deleteUserData = async (req, res) => {
   try {
     const dataId = req.params.id;
@@ -148,7 +138,6 @@ exports.deleteUserData = async (req, res) => {
   
 
 //admin logout
-
 exports.logoutAdmin = async(req,res)=>{
   req.session.destroy((err)=>{
     if(err){

@@ -1,4 +1,6 @@
-// Middleware to check if the user is authenticated
+
+//****Middleware to check if the user is authenticated
+
   function isAuthenticated(req, res, next) {
     if (req.session.user) {
       
@@ -8,4 +10,18 @@
     }
   }
 
+
+  //****middleware to check is the admin is authenticated 
+
+  function adminAuthenticated(req,res,next){
+    if(!req.session.user2){
+     res.redirect('/admin')//is user is authenticated proceded the next route handler
+
+    }else{
+      return next();//user not authenticated procced the next route handler
+    }
+  }
+
+
 module.exports = isAuthenticated;
+module.exports = adminAuthenticated;
