@@ -14,9 +14,10 @@ exports.loginView = async(req,res)=>{
 //rendering the index(Home page)
 exports.indexView = async(req,res)=>{
   if(!req.session.user){
+   
     res.redirect('/');
   }else{  
-    
+   
   res.render('index');
   }
   

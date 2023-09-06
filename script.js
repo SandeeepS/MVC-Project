@@ -2,8 +2,10 @@ const express = require('express');
 const session = require('express-session');
 const app = express();
 const  {connectMongoDb} =require('./connection');
-const routes = require('./routes');
+const routes = require('./routes/index');
 const env = require('dotenv')
+const nocache = require('nocache');
+const adminRoute = require('./routes/adminRoute');
 env.config()
 
 app.set('view engine','ejs');
@@ -12,6 +14,7 @@ app.use(express.static(__dirname));
 
 app.use(express.json()); // for parsing application/json
 app.use(express.urlencoded({ extended: true }));
+app.use(nocache())
 
 
 
@@ -31,6 +34,7 @@ app.use(session({
 
   
 app.use('/',routes);
+app.use('/admin',adminRoute);
 
 app.listen(5000, () => {
     console.log('Server is running at :',5000);
