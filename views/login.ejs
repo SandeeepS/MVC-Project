@@ -13,6 +13,13 @@
   <body>
   <section>
     <div class="container mt-5 pt-5">
+
+       <div class="popup" id="popupp">
+        <h2>Please fill the form</h2>
+        <button type="button" onclick="closePopup()">OK</button>
+       </div>
+       
+
         <div class="row">
             <div class="col-12 col-sm-8 col-md-6 m-auto">
                  <div class="card">
@@ -37,18 +44,27 @@
     
 function validateForm(){
   // Get the user name and password from the form
+  const popup = document.getElementById('popupp');
   const usernamefrom = document.getElementById('username').value;
   const passwordfrom = document.getElementById('password').value;
 
   if(usernamefrom ===""||usernamefrom ===null || passwordfrom===""){
       event.preventDefault();
-      alert("please fill the form");
+      popupp.classList.add("open-popup");
       return false;
   }else{
       return true;
   }
 
 }
+
+  </script>
+
+  <script>
+    function closePopup(){
+      const popup = document.getElementById('popupp');
+      popup.classList.remove("open-popup");
+    }
   </script>
  
 

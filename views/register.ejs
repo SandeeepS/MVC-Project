@@ -9,6 +9,16 @@
 </head>
 <body>
 <section>
+    <div class="popup" id="popupp">
+        <h2>Please fill the form</h2>
+        <button type="button" onclick="closePopup()">OK</button>
+       </div>
+
+     <div class="popup" id="popupp2">
+        <h2>Password is not match</h2>
+        <button type="button" onclick="closePopup()">OK</button>
+    </div>
+
     <div class="row">
     <div class="col-12">
         <form action="/signup" method="post"  onsubmit="return validateForm()"  class="form-signup" >
@@ -18,35 +28,62 @@
                <input type="text" class="form-control" name="name" id="username" placeholder="Name">
             </div>
             <div class="form-group">
-                <input type="email" class="form-control" name="email" id="password" placeholder="Email">
+                <input type="email" class="form-control" name="email" id="email" placeholder="Email">
             </div>
             <div class="form-group">
-                <input type="password" class="form-control" name="password" placeholder="password">
+                <input type="password" class="form-control" name="password"  id="password" placeholder="Password">
+            </div>
+            <div class="form-group">
+                <input type="password" class="form-control" name="cpassword" id="cpass" placeholder="Conform Password">
             </div>
             
             <input type="submit" value="Login"  class="btn btn-primary mt-3">
         </form>
     </div>
     </div>
-</section>
 
+    
+</section>
 
 <script>
     
     function validateForm(){
       // Get the user name and password from the form
+      const popup = document.getElementById('popupp');
+      const popup2 = document.getElementById('popupp2');
       const usernamefrom = document.getElementById('username').value;
+      const emailForm    = document.getElementById('email').value;
       const passwordfrom = document.getElementById('password').value;
+      const confirmPasswordfrom = document.getElementById('cpass').value;
+     
     
-      if(usernamefrom ===""||usernamefrom ===null || passwordfrom===""){
+    
+      if(usernamefrom ===""||usernamefrom ===null || passwordfrom==="" || passwordfrom === null || emailForm === "" || emailForm === null || confirmPasswordfrom ==="" || confirmPasswordfrom === null){
           event.preventDefault();
-          alert("please fill the form");
+          popupp.classList.add("open-popup");
           return false;
-      }else{
+        } else if (passwordfrom !== confirmPasswordfrom) {
+        event.preventDefault();
+        popupp2.classList.add("open-popup");
+        
+        return false;
+        }
+        else{
           return true;
       }
     
     }
-      </script>
+    
+</script>
+    
+<script>
+    function closePopup(){
+        const popup = document.getElementById('popupp');
+        const popup2 = document.getElementById('popupp2');
+        popup.classList.remove("open-popup");
+        popup2.classList.remove("open-popup");
+    }
+</script>
+     
 </body>
 </html>
